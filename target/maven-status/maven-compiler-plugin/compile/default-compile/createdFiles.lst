@@ -1,0 +1,7 @@
+com\teste\configuration\ServerDK.class
+com\teste\dao\User_dao.class
+com\teste\service\SendMessage.class
+com\teste\model\Usermodel$Status.class
+com\teste\service\security.class
+com\teste\dto\Userdto.class
+com\teste\model\Usermodel.class
