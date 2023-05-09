@@ -80,8 +80,7 @@ public class User_dao {
     public List<Friendmodel> findFriend(Userdto user){
         Query query = manager.createNativeQuery("Select * from amigos where id_user = :id",Friendmodel.class).setParameter("id", user.getId());
         manager.getTransaction().begin();
-        List<Friendmodel> result = (List<Friendmodel>) query.getResultList();
-        System.out.println(result);
+        List<Friendmodel> result = query.getResultList();
         manager.getTransaction().commit();
         return result;
     }
