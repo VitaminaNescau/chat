@@ -25,8 +25,9 @@ public class SendMessage {
                 System.out.println(1);
                sendAll(users, user, MSG);   
             }else{
+                 System.out.println(2);
                 sendFor(users,MSG);
-                System.out.println(2);
+               
             }
            
       
