@@ -3,16 +3,17 @@ package com.teste.service;
 
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import com.teste.dao.User_dao;
 import com.teste.dto.FriendDTO;
 import com.teste.dto.Userdto;
 
-public class FriendsAndGroups {
+public class FriendsAndGroups extends Thread{
     FriendDTO friendDTO;
     
-    public FriendsAndGroups(){}
+    public FriendsAndGroups() {}
 
     // public Userdto addFriend(String name){
     //     Usermodel model = User_dao.getInstance().findUser(name);
@@ -38,5 +39,14 @@ public class FriendsAndGroups {
          });
        return friendList;
     }
-  
+    public Hashtable friend(){
+        
+        return null;}
+
+    @Override
+    public void run() {
+        while (true) {
+            
+        }
+    }
 }
