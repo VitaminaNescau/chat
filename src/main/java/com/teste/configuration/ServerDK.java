@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -22,7 +21,7 @@ public class ServerDK implements Runnable {
     private BufferedReader input;
     private PrintWriter output;
     private  ConcurrentHashMap<String,FriendDTO> user = new ConcurrentHashMap<>();
-    private static ArrayList<Userdto> accounts = new ArrayList<>();
+    private static ConcurrentHashMap<String,Userdto> accounts = new ConcurrentHashMap<>();
     private  ServerSocket server;
     Logger log;
     private  Userdto userdto;
@@ -53,7 +52,7 @@ public class ServerDK implements Runnable {
             userdto = new Userdto();
         try {
             userdto.setSocket(server.accept());
-            accounts.add(userdto);
+            //accounts.add(userdto);
             new Thread(new ServerDK(userdto)).start();
         } catch (IOException e) {
             log.info(e.getMessage());
@@ -67,22 +66,30 @@ public class ServerDK implements Runnable {
             input = new BufferedReader(new InputStreamReader(userdto.getSocket().getInputStream()));
             String info[] = sc.verifyString(input.readLine());
             userdto = sc.login(info,userdto);
-            System.out.println(userdto.toString());
             SendMessage sendMessage = new SendMessage();
             FriendsAndGroups FG = new FriendsAndGroups();
             FG.allFriends(userdto)
             .forEach(e->{
                 user.put(e.getUsername(),e);
-            });
-            // accounts.forEach(e->{
-            //     if (e.getUsername().equals(user.get(e).getUsername())) {
-            //         user.get(e).setSocket(e.getSocket());
-            //     }
-            // });
+                try {
+                    if(accounts.get(e.getUsername()) != null){
+                        user.get(e.getUsername()).setSocket(accounts.get(e.getUsername()).getSocket());
+                    }
+                } catch (NullPointerException erro) {
+                   user.get(e.getUsername()).setStatus(Status.OFF);
+                }
 
+            });
+       
             /*Sessão do usuario 100% iniciada */
             if (userdto.getStatus() == Status.ON) {
-                //user.put(userdto.getUsername(), userdto);
+                accounts.put(userdto.getUsername(), userdto);
+                user.forEach((n,v)->{
+
+                    if (v.getStatus().equals(Status.OFF)) {
+                        System.out.println(v.getUsername());
+                    }
+                });
                 while (true) {
                     sendMessage.forwardMessage(user,userdto,input.readLine());    
                 }           
