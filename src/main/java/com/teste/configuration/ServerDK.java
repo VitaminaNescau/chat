@@ -7,7 +7,8 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.SocketException;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import com.teste.dao.User_dao;
@@ -17,11 +18,12 @@ import com.teste.model.Usermodel.Status;
 import com.teste.service.FriendsAndGroups;
 import com.teste.service.SendMessage;
 
-public class ServerDK implements Runnable {
+public class ServerDK implements Runnable  {
     private BufferedReader input;
     private PrintWriter output;
-    private  ConcurrentHashMap<String,FriendDTO> user = new ConcurrentHashMap<>();
-    private static ConcurrentHashMap<String,Userdto> accounts = new ConcurrentHashMap<>();
+    //private  HashMap<String,FriendDTO> user = new HashMap<>();
+    // private static ConcurrentHashMap<String,Userdto> accounts = new ConcurrentHashMap<>();
+    private static ManagerUser accounts = new ManagerUser();
     private  ServerSocket server;
     Logger log;
     private  Userdto userdto;
@@ -35,7 +37,7 @@ public class ServerDK implements Runnable {
         try { 
             server = new ServerSocket();
             server.setPerformancePreferences(1, 0, 0);
-            server.bind(new InetSocketAddress("localhost", 3030));  
+            server.bind(new InetSocketAddress("192.168.20.209", 3030));  
             User_dao.getInstance();
            
         } catch (IOException e) {
@@ -48,12 +50,14 @@ public class ServerDK implements Runnable {
      
     }
     public void conectionServe(){
+        ExecutorService pool = Executors.newFixedThreadPool(5);
         while (true) {
             userdto = new Userdto();
         try {
             userdto.setSocket(server.accept());
             //accounts.add(userdto);
-            new Thread(new ServerDK(userdto)).start();
+            //new Thread(new ServerDK(userdto)).start();
+            pool.submit(new ServerDK(userdto));
         } catch (IOException e) {
             log.info(e.getMessage());
         }
@@ -62,36 +66,31 @@ public class ServerDK implements Runnable {
     @Override
     public void run() {
         try {
-            security sc = new security();
+             security sc = new security();
             input = new BufferedReader(new InputStreamReader(userdto.getSocket().getInputStream()));
             String info[] = sc.verifyString(input.readLine());
             userdto = sc.login(info,userdto);
-            SendMessage sendMessage = new SendMessage();
-            FriendsAndGroups FG = new FriendsAndGroups();
-            FG.allFriends(userdto)
-            .forEach(e->{
-                user.put(e.getUsername(),e);
-                try {
-                    if(accounts.get(e.getUsername()) != null){
-                        user.get(e.getUsername()).setSocket(accounts.get(e.getUsername()).getSocket());
-                    }
-                } catch (NullPointerException erro) {
-                   user.get(e.getUsername()).setStatus(Status.OFF);
-                }
-
-            });
-       
+            //new FriendsAndGroups(userdto,accounts)
+            FriendsAndGroups friend;
+            Thread friends = new Thread(friend = new FriendsAndGroups(userdto,accounts));
+            friends.start();
+            // new FriendsAndGroups().users.get(friends);
             /*Sessão do usuario 100% iniciada */
             if (userdto.getStatus() == Status.ON) {
-                accounts.put(userdto.getUsername(), userdto);
-                user.forEach((n,v)->{
-
-                    if (v.getStatus().equals(Status.OFF)) {
-                        System.out.println(v.getUsername());
-                    }
-                });
+                accounts.addUser(userdto);
+              
+               
+              
                 while (true) {
-                    sendMessage.forwardMessage(user,userdto,input.readLine());    
+                 
+                    SendMessage.getInstance().forwardMessage(friend.users,userdto,input.readLine());
+                      
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }           
            }
             System.out.println(userdto.toString());
