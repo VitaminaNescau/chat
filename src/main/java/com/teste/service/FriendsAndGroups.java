@@ -70,7 +70,10 @@ public class FriendsAndGroups extends Thread{
                 }
 
             });
-            //System.out.println(users);
+            // System.out.println("lista de amigos de "+ user.getUsername());
+            // users.forEach((c,v)->{
+            //     System.out.println(c);
+            // });
               try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {

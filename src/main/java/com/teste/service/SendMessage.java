@@ -45,7 +45,7 @@ public class SendMessage {
         users.forEach((c,v)->{
             System.out.println(v.getUsername());
             try {
-                output = new PrintWriter(v.getSocket().getOutputStream(), true);
+                output = new PrintWriter(v.getSocket().socket().getOutputStream(), true);
                  
                     output.println(userdto.getUsername()+": "+msg[1]);
                     System.out.println("envio mensagem pra grupo");
@@ -57,7 +57,7 @@ public class SendMessage {
     /*metodo para as mensagens privadas*/
     public void sendFor(HashMap<String, FriendDTO> users,String msg[]){
         try {
-            output = new PrintWriter(users.get(msg[0]).getSocket().getOutputStream(), true);
+            output = new PrintWriter(users.get(msg[0]).getSocket().socket().getOutputStream(), true);
             output.println(msg[1]);
             System.out.println("enviou mensagem para " + users.get(msg[0]));
         } catch (IOException e) {

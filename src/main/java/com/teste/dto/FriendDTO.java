@@ -1,6 +1,7 @@
 package com.teste.dto;
 
 import java.net.Socket;
+import java.nio.channels.SocketChannel;
 
 import com.teste.model.Usermodel.Status;
 
@@ -12,19 +13,26 @@ public class FriendDTO {
     private String username;
     private String host;
     private Status status;
-    private Socket socket;
+    private SocketChannel socket;
+
   
+    public SocketChannel getSocket() {
+        return socket;
+    }
+    public void setSocket(SocketChannel socket) {
+        this.socket = socket;
+    }
     // public FriendDTO(String username,String host, Status status){
     //     this.username = username;
     //     this.status = status;
     //     this.host = host;
     // }  
-    public Socket getSocket() {
-        return socket;
-    }
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
+    // public Socket getSocket() {
+    //     return socket;
+    // }
+    // public void setSocket(Socket socket) {
+    //     this.socket = socket;
+    // }
     public int getId() {
         return id;
     }

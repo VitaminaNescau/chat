@@ -1,6 +1,8 @@
 package com.teste.dto;
 
 import java.net.Socket;
+import java.nio.channels.SocketChannel;
+
 import com.teste.model.Usermodel.Status;
 
 public class Userdto{
@@ -8,10 +10,16 @@ public class Userdto{
     private String username;
     private String host;
     private Status status;
-    private Socket socket;
+    private SocketChannel socket;
   
     // private List friendsList;
 
+    public SocketChannel getSocket() {
+        return socket;
+    }
+    public void setSocket(SocketChannel socket) {
+        this.socket = socket;
+    }
     // public List getFriendsList() {
     //     return friendsList;
     // }
@@ -25,12 +33,12 @@ public class Userdto{
         this.id = id;
     }
 
-    public Socket getSocket() {
-        return socket;
-    }
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
+    // public Socket getSocket() {
+    //     return socket;
+    // }
+    // public void setSocket(Socket socket) {
+    //     this.socket = socket;
+    // }
     public String getUsername() {
         return username;
     }
@@ -52,6 +60,6 @@ public class Userdto{
     @Override
     public String toString() {
         return String.format("Username: %s, Host: %s, Status: %s, Socket: %s", 
-                              username, host, status, socket.getLocalAddress().getHostAddress());
+                              username, host, status, socket.socket().getLocalAddress().getHostAddress());
     }
 }
