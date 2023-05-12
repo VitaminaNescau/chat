@@ -13,6 +13,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
@@ -26,7 +27,7 @@ public class ServerDK implements Runnable  {
     private BufferedReader input;
     private PrintWriter output;
     //private  HashMap<String,FriendDTO> user = new HashMap<>();
-    // private static ConcurrentHashMap<String,Userdto> accounts = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String,Userdto> userTemp = new ConcurrentHashMap<>();
     private static ManagerUser accounts = new ManagerUser();
     private  ServerSocket server;
     private ServerSocketChannel serverChannel;
@@ -70,12 +71,20 @@ public class ServerDK implements Runnable  {
         while (true) {
             try {
                 selector.select();
+                Iterator<SelectionKey> select = selector.selectedKeys().iterator();
+                while (select.hasNext()) {
+                    SelectionKey key = select.next();
+                    if (key.isConnectable()) {
+                        
+                    }
+                }
+           
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-   
+    }
    
         //ExecutorService pool = Executors.newFixedThreadPool(5);
     //     while (true) {
@@ -89,6 +98,10 @@ public class ServerDK implements Runnable  {
     //         log.info(e.getMessage());
     //     }
     //  }
+    
+    public void registerUser(){
+        
+        
     }
     @Override
     public void run() {
