@@ -63,7 +63,7 @@ public class FriendsAndGroups extends Thread{
                 users.put(e.getUsername(),e);
                 try {
                     if(accounts.findUser(e.getUsername()) != null){
-                        users.get(e.getUsername()).setSocket(accounts.findUser(e.getUsername()).getSocket().socket());
+                        users.get(e.getUsername()).setSocket(accounts.findUser(e.getUsername()).getSocket());
                     }
                 } catch (NullPointerException erro) {
                    users.get(e.getUsername()).setStatus(Status.OFF);

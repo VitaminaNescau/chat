@@ -23,12 +23,12 @@ import com.teste.dto.Userdto;
 import com.teste.model.Usermodel.Status;
 import com.teste.service.FriendsAndGroups;
 import com.teste.service.SendMessage;
-public class ServerDK implements Runnable  {
+public class ServerDK implements Runnable {
     private BufferedReader input;
     private PrintWriter output;
     //private  HashMap<String,FriendDTO> user = new HashMap<>();
     private static ConcurrentHashMap<String,Userdto> userTemp = new ConcurrentHashMap<>();
-    private static ManagerUser accounts = new ManagerUser();
+    private static ManagerUser accounts;
     private  ServerSocket server;
     private ServerSocketChannel serverChannel;
     Logger log;
@@ -36,20 +36,17 @@ public class ServerDK implements Runnable  {
     private static Selector selector;
     private static final int PORT = 3030;
     private final ByteBuffer buffer = ByteBuffer.allocate(1024);
+    
+    
+    
     public ServerDK(Userdto user){
         this.userdto = user;
     }
     ServerDK(){
         try { 
-            // server = new ServerSocket();
-            // server.setPerformancePreferences(1, 0, 0);
-            // server.bind(new InetSocketAddress("192.168.20.209", PORT));  
-                serverChannel = ServerSocketChannel.open();
-                serverChannel.bind(new InetSocketAddress("192.168.20.209", PORT));
-                serverChannel.configureBlocking(false);
-                selector = Selector.open();
-                serverChannel.register(selector,SelectionKey.OP_ACCEPT);
-            
+            server = new ServerSocket();
+            server.setPerformancePreferences(1, 0, 0);
+            server.bind(new InetSocketAddress("192.168.20.209", PORT));  
             User_dao.getInstance();
            
         } catch (IOException e) {
@@ -68,46 +65,26 @@ public class ServerDK implements Runnable  {
      
     }
     public void conectionServe(){
+
+        ExecutorService pool = Executors.newFixedThreadPool(5);
         while (true) {
-            try {
-                selector.select();
-                Iterator<SelectionKey> select = selector.selectedKeys().iterator();
-                while (select.hasNext()) {
-                    SelectionKey key = select.next();
-                    if (key.isConnectable()) {
-                        
-                    }
-                }
-           
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            userdto = new Userdto();
+        try {
+            userdto.setSocket(server.accept());
+            //accounts.add(userdto);
+            //new Thread(new ServerDK(userdto)).start();
+            pool.submit(new ServerDK(userdto));
+        } catch (IOException e) {
+            log.info(e.getMessage());
         }
+     }
     }
    
-        //ExecutorService pool = Executors.newFixedThreadPool(5);
-    //     while (true) {
-    //         userdto = new Userdto();
-    //     try {
-    //         userdto.setSocket(server.accept());
-    //         //accounts.add(userdto);
-    //         //new Thread(new ServerDK(userdto)).start();
-    //         pool.submit(new ServerDK(userdto));
-    //     } catch (IOException e) {
-    //         log.info(e.getMessage());
-    //     }
-    //  }
-    
-    public void registerUser(){
-        
-        
-    }
     @Override
     public void run() {
         try {
              security sc = new security();
-            input = new BufferedReader(new InputStreamReader(userdto.getSocket().socket().getInputStream()));
+            input = new BufferedReader(new InputStreamReader(userdto.getSocket().getInputStream()));
             String info[] = sc.verifyString(input.readLine());
             userdto = sc.login(info,userdto);
             //new FriendsAndGroups(userdto,accounts)
@@ -125,7 +102,7 @@ public class ServerDK implements Runnable  {
                 }           
            }
             System.out.println(userdto.toString());
-            output = new PrintWriter(userdto.getSocket().socket().getOutputStream(), true);
+            output = new PrintWriter(userdto.getSocket().getOutputStream(), true);
             output.print("DESCONECTADO");
             System.out.println("Usuario desconectado");
             sc.removeUser(userdto); 
@@ -144,4 +121,4 @@ public class ServerDK implements Runnable  {
 
 
 
-}
+    }

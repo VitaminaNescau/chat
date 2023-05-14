@@ -10,8 +10,8 @@ public class Userdto{
     private String username;
     private String host;
     private Status status;
-    private SocketChannel socket;
-    //private Socket socket;
+    
+    private Socket socket;
   
     // private List friendsList;
 
@@ -28,11 +28,11 @@ public class Userdto{
         this.id = id;
     }
 
-    public SocketChannel getSocket() {
+    public Socket getSocket() {
         return socket;
     }
-    public void setSocket(SocketChannel socket) {
-        this.socket = socket;
+    public void setSocket(Socket socket2) {
+        this.socket = socket2;
     }
     public String getUsername() {
         return username;
@@ -55,6 +55,6 @@ public class Userdto{
     @Override
     public String toString() {
         return String.format("Username: %s, Host: %s, Status: %s, Socket: %s", 
-                              username, host, status, socket.socket().getLocalAddress().getHostAddress());
+                              username, host, status, socket.getLocalAddress().getHostAddress());
     }
 }
