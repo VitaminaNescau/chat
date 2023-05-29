@@ -1,23 +1,16 @@
 package com.teste.dto;
 
+import java.io.Serializable;
 import java.net.Socket;
 import com.teste.model.Usermodel.Status;
 
-public class Userdto{
+public class Userdto implements Serializable{
     private int id;
     private String username;
     private String host;
-    private Status status;
-    private Socket socket;
-  
-    // private List friendsList;
+    private transient Status status;
+    private transient Socket socket;
 
-    // public List getFriendsList() {
-    //     return friendsList;
-    // }
-    // public void setFriendsList(List friendsList) {
-    //     this.friendsList = friendsList;
-    // }
     public int getId() {
         return id;
     }

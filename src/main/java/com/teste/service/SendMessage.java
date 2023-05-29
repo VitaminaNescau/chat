@@ -2,11 +2,7 @@ package com.teste.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
-
-import com.teste.configuration.ManagerUser;
 import com.teste.dto.FriendDTO;
 import com.teste.dto.Userdto;
 
@@ -28,42 +24,44 @@ public class SendMessage {
         }
         return instance;
     }
-    public void forwardMessage(HashMap<String, FriendDTO> users,Userdto user,String msg){
+    public void forwardMessage(ConcurrentHashMap<String, FriendDTO> users,Userdto user,String msg){
         String MSG[]  = verifySend(msg);
-        
+         try {
             if (MSG[0].equals(group)) {
                sendAll(users, user, MSG);   
             }else{
-                sendFor(users,MSG);
-               
-            }
+               sendFor(users,user,MSG);   
+            } 
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(NullPointerException e){
+            e.printStackTrace();
+        } catch(ArrayIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
            
       
     }
     /*metodo para as mensagens em grupo*/
-    public void sendAll(HashMap<String, FriendDTO> users,Userdto userdto,String msg[]){
+    public void sendAll(ConcurrentHashMap<String, FriendDTO> users,Userdto userdto,String msg[]) {
         users.forEach((c,v)->{
-            System.out.println(v.getUsername());
-            try {
+                try {
                 output = new PrintWriter(v.getSocket().getOutputStream(), true);
-                 
-                    output.println(userdto.getUsername()+": "+msg[1]);
-                    System.out.println("envio mensagem pra grupo");
-              } catch (IOException e) {
-                Logger.getLogger("ERROR").info(e.getMessage());
-              }
+                output.println(userdto.getUsername()+": "+msg[1]);
+                System.out.println("envio mensagem pra grupo"); 
+            } catch (IOException e) {
+                    e.printStackTrace();
+                }
         });
     }
     /*metodo para as mensagens privadas*/
-    public void sendFor(HashMap<String, FriendDTO> users,String msg[]){
-        try {
-            output = new PrintWriter(users.get(msg[0]).getSocket().getOutputStream(), true);
-            output.println(msg[1]);
-            System.out.println("enviou mensagem para " + users.get(msg[0]));
-        } catch (IOException e) {
-            Logger.getLogger("ERROR").info(e.getMessage());
-        }
+    public void sendFor(ConcurrentHashMap<String, FriendDTO> users,Userdto user,String msg[]) throws IOException, NullPointerException{
         
+            System.out.println(msg[0]+" "+msg[1]);
+            output = new PrintWriter(users.get(msg[0]).getSocket().getOutputStream(), true);
+            output.println(user.getUsername()+";"+msg[1]);
+            System.out.println("enviou mensagem para " + users.get(msg[0]).getUsername());
+       
     }
 
 

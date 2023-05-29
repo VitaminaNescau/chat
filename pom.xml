@@ -29,6 +29,22 @@
       <artifactId>hibernate-core</artifactId>
       <version>6.2.0.Final</version>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-netty-http</artifactId>
+      <version>3.1.2</version>
+    </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.inject</groupId>
+        <artifactId>jersey-hk2</artifactId>
+        <version>3.1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.media</groupId>
+        <artifactId>jersey-media-json-jackson</artifactId> 
+        <version>3.1.2</version>
+      </dependency>
+
   </dependencies>
 
   <build>
@@ -107,7 +123,15 @@
               </execution>
             </executions>
         </plugin>
-
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <configuration>
+                <mainClass>com.teste.configuration.ServerDK</mainClass>
+              
+            </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>

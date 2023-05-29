@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.teste.dto.FriendDTO;
-import com.teste.dto.Userdto;
 import com.teste.model.Friendmodel;
 import com.teste.model.Usermodel;
 import com.teste.model.Usermodel.Status;
@@ -77,8 +76,8 @@ public class User_dao {
         manager.getTransaction().commit();
         return null;
     }
-    public List<Friendmodel> findFriend(Userdto user){
-        Query query = manager.createNativeQuery("Select * from amigos where id_user = :id",Friendmodel.class).setParameter("id", user.getId());
+    public List<Friendmodel> findFriend(int id){
+        Query query = manager.createNativeQuery("Select * from amigos where id_user = :id",Friendmodel.class).setParameter("id", id);
         manager.getTransaction().begin();
         List<Friendmodel> result = query.getResultList();
         manager.getTransaction().commit();

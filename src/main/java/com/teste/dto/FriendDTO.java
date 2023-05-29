@@ -7,6 +7,7 @@ import com.teste.model.Usermodel.Status;
 /**
  * FriendDTO
  */
+
 public class FriendDTO {
     private int id;
     private String username;
