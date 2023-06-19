@@ -9,7 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.teste.configuration.ManagerUser;
 import com.teste.dao.User_dao;
 import com.teste.dto.FriendDTO;
+import com.teste.dto.MessagerDTO;
 import com.teste.dto.Userdto;
+import com.teste.model.MessagerModel;
 
 public class FriendsAndGroups extends Thread{
     private FriendDTO friendDTO;
@@ -25,12 +27,7 @@ public class FriendsAndGroups extends Thread{
     public FriendsAndGroups(){
 
     }
-    // public static FriendsAndGroups getInstance(){
-    //     if (instance == null) {
-    //         instance = new FriendsAndGroups(user,accounts);
-    //     }
-    //     return instance;
-    // }
+   
     public List<FriendDTO> allFriends(int id){
         User_dao.getInstance().findFriend(id).forEach(e->{
             friendDTO = new FriendDTO();
@@ -43,19 +40,6 @@ public class FriendsAndGroups extends Thread{
         //updateListFriend();
         return friendList;
     }
-
-    // public List<FriendDTO> allFriends(Userdto user){
-    //     User_dao.getInstance().findFriend(user.getId()).forEach(e->{
-    //         friendDTO = new FriendDTO();
-    //         friendDTO.setUsername(e.getId_friend().getUsername());
-    //         friendDTO.setId(e.getId_friend().getId_username().intValue());
-    //         friendDTO.setHost(e.getId_friend().getHost());
-    //         friendDTO.setStatus(e.getId_friend().getStatus());
-    //         friendList.add(friendDTO);
-    //      });
-    //     //updateListFriend();
-    //     return friendList;
-    // }
     public void updateListFriend(){
             friendList = allFriends(user.getId());
             friendList.forEach((list)->{
@@ -69,4 +53,23 @@ public class FriendsAndGroups extends Thread{
             }
          });   
     }
+    public List<MessagerDTO> MessagerHistory(int id,String name) {
+        List<MessagerModel> result =  User_dao.getInstance().MessagerHistory(id);
+        List<MessagerDTO> messagerDTOs = new ArrayList<>(); 
+        for (MessagerModel messager : result) {
+            if ((messager.getReceiver_id().getUsername().equals(name)
+             || messager.getSend_id().getUsername().equals(name)) ) {
+                MessagerDTO dto = new MessagerDTO();
+                dto.setMessager(messager.getMessager());
+                dto.setSend(messager.getSend_id().getUsername());
+                dto.setReceive(messager.getReceiver_id().getUsername());
+                messagerDTOs.add(dto); 
+            }  
+           
+        }
+        
+        return  messagerDTOs;
+        
+    }
+ 
 }

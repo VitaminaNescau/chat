@@ -15,11 +15,7 @@ public class FriendDTO {
     private Status status;
     private Socket socket;
   
-    // public FriendDTO(String username,String host, Status status){
-    //     this.username = username;
-    //     this.status = status;
-    //     this.host = host;
-    // }  
+
     public Socket getSocket() {
         return socket;
     }

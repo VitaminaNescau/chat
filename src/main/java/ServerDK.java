@@ -32,6 +32,7 @@ public class ServerDK implements Runnable  {
     
     public ServerDK(Userdto user){
         this.userdto = user;
+        
     }
     ServerDK(){
         try { 
@@ -49,7 +50,7 @@ public class ServerDK implements Runnable  {
     public static void main(String[] args) {
         ServerDK serverMain = new ServerDK();
         serverMain.conectionServe();
-     
+        
     }
     public void conectionServe(){
         //ExecutorService pool = Executors.newFixedThreadPool(50);
@@ -75,12 +76,13 @@ public class ServerDK implements Runnable  {
             input = new BufferedReader(new InputStreamReader(userdto.getSocket().getInputStream()));
             
             String info[] = sc.verifyString(input.readLine());
-            System.out.println(info[0]+info[1]);
+       
             userdto = sc.login(info,userdto);
             output = new PrintStream(userdto.getSocket().getOutputStream(), true);
             /*Sessão do usuario 100% iniciada */
             if (userdto.getStatus() == Status.ON) {
                 output.println("OK");
+                output.println(userdto.getId());
                 accounts.addUser(userdto);
                 
                 friend = new FriendsAndGroups(userdto,accounts);
@@ -110,9 +112,11 @@ public class ServerDK implements Runnable  {
                 });
                 messager.start();
                          
+           }else{
+            output.println("ERRO");
            }
            while (true) {
-            if (userdto.getSocket().isClosed()) {
+            if (userdto == null || userdto.getSocket().isClosed() ) {
                         sc.removeUser(userdto);
                         accounts.removerUSer(userdto);
                         System.out.println("Usuario desconectado ");
@@ -121,10 +125,9 @@ public class ServerDK implements Runnable  {
            try {
             friend.updateListFriend();
             Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             
            }
            
@@ -133,7 +136,8 @@ public class ServerDK implements Runnable  {
             log.info(e.getMessage());
         } catch(IOException  e){
             log.info(e.getMessage());
-        } catch(NullPointerException  e){
+         } 
+         catch(NullPointerException  e){
             log.info(e.getMessage());
         }
         System.out.println("Thread desligada ");  

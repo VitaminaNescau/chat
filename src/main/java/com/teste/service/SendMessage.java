@@ -3,8 +3,11 @@ package com.teste.service;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.ConcurrentHashMap;
+
+import com.teste.dao.User_dao;
 import com.teste.dto.FriendDTO;
 import com.teste.dto.Userdto;
+import com.teste.model.MessagerModel;
 
 /**
  * SendMessage
@@ -40,7 +43,7 @@ public class SendMessage {
             e.printStackTrace();
         }
            
-      
+       
     }
     /*metodo para as mensagens em grupo*/
     public void sendAll(ConcurrentHashMap<String, FriendDTO> users,Userdto userdto,String msg[]) {
@@ -48,7 +51,7 @@ public class SendMessage {
                 try {
                 output = new PrintWriter(v.getSocket().getOutputStream(), true);
                 output.println(userdto.getUsername()+": "+msg[1]);
-                System.out.println("envio mensagem pra grupo"); 
+                
             } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -56,11 +59,11 @@ public class SendMessage {
     }
     /*metodo para as mensagens privadas*/
     public void sendFor(ConcurrentHashMap<String, FriendDTO> users,Userdto user,String msg[]) throws IOException, NullPointerException{
-        
-            System.out.println(msg[0]+" "+msg[1]);
+            MessagerModel savemessager = new MessagerModel(msg[1],user,users.get(msg[0]));
+            User_dao.getInstance().saveMessager(savemessager);
             output = new PrintWriter(users.get(msg[0]).getSocket().getOutputStream(), true);
             output.println(user.getUsername()+";"+msg[1]);
-            System.out.println("enviou mensagem para " + users.get(msg[0]).getUsername());
+          
        
     }
 
@@ -69,4 +72,8 @@ public class SendMessage {
         return msg.split(";");
     }
         
+    public void MessagerSave(){
+
+    }
+
 }

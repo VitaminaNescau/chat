@@ -19,7 +19,7 @@ import jakarta.persistence.Transient;
  */
 @Entity
 @Table(name = "usuario")
-public class Usermodel {
+public class Usermodel  {
 
     public enum Status{OFF,ON}
     @Transient

@@ -1,20 +1,36 @@
 package com.teste.configuration;
 
-import java.net.URI;
 
-import org.glassfish.jersey.netty.httpserver.NettyHttpContainerProvider;
-import org.glassfish.jersey.server.ResourceConfig;
+import org.jboss.resteasy.core.ResteasyDeploymentImpl;
+import org.jboss.resteasy.plugins.server.reactor.netty.ReactorNettyJaxrsServer;
+import org.jboss.resteasy.spi.ResteasyDeployment;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.ext.ExceptionMapper;
 
-import io.netty.channel.Channel;
-import jakarta.ws.rs.core.UriBuilder;
+
 
 public class ServerNetty {
     
 
     public void start(){
-        URI baseApi = UriBuilder.fromUri("http://localhost/").port(8080).build();
-        ResourceConfig rc = new ResourceConfig().packages("com.teste.controller");
-        Channel server = NettyHttpContainerProvider.createHttp2Server(baseApi, rc, null);
-        System.out.println("API Iniciada");
-    }
+        ReactorNettyJaxrsServer server =  new ReactorNettyJaxrsServer();
+        ResteasyDeployment dp = new ResteasyDeploymentImpl();
+        dp.setApplicationClass(Controller.class.getName());
+        server.setDeployment(dp);
+        server.setPort(8080);
+        server.start();
+    
 }
+} 
+ class ExceptionMappingProvider implements ExceptionMapper<Exception> {
+        @Override
+        public Response toResponse(Exception exception) {
+            if (exception instanceof IllegalStateException) {
+                return Response.status(Status.BAD_REQUEST).build();
+            }
+            return Response.serverError().build();
+        }
+
+    }
+
