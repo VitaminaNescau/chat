@@ -31,18 +31,15 @@ public class ServerDK implements Runnable  {
     // private  User_dao userDao;
     
     public ServerDK(Userdto user){
-        this.userdto = user;
-        
+        this.userdto = user; 
     }
     ServerDK(){
         try { 
             server = new ServerSocket();
-            server.setPerformancePreferences(1, 0, 0);
+           //server.setPerformancePreferences(1, 0, 0);
             server.bind(new InetSocketAddress("localhost", 3030));  
             new ServerNetty().start();
             User_dao.getInstance();
-            
-           
         } catch (IOException e) {
             log.info(e.getMessage());
         }
@@ -83,6 +80,7 @@ public class ServerDK implements Runnable  {
             if (userdto.getStatus() == Status.ON) {
                 output.println("OK");
                 output.println(userdto.getId());
+                output.println(userdto.getUsername());
                 accounts.addUser(userdto);
                 
                 friend = new FriendsAndGroups(userdto,accounts);
