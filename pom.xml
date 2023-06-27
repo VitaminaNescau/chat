@@ -34,22 +34,27 @@
       <artifactId>hibernate-c3p0</artifactId>
       <version>6.2.4.Final</version>
     </dependency>
-  
-  <!-- <dependency>
-    <groupId>io.projectreactor.netty</groupId>
-    <artifactId>reactor-netty-core</artifactId>
-    <version>1.1.8</version>
-  </dependency> -->
+        <!-- <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-grizzly2-http</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+             <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-binding</artifactId>
+            <version>3.1.2</version>
+        </dependency> -->
+    
   <dependency>
     <groupId>org.jboss.resteasy</groupId>
     <artifactId>resteasy-reactor-netty</artifactId>
     <version>6.2.4.Final</version>
   </dependency>
-   <!-- <dependency>
-    <groupId>io.projectreactor.netty</groupId>
-    <artifactId>reactor-netty-http</artifactId>
-    <version>1.1.8</version>
-  </dependency> -->
   <dependency>
     <groupId>org.jboss.resteasy</groupId>
     <artifactId>resteasy-jackson2-provider</artifactId>
@@ -159,8 +164,9 @@
         <artifactId>jakarta.activation-api</artifactId>
         <version>2.1.1</version>
       </dependency>
-
+      
     </dependencies>
 
   </dependencyManagement>
+  
 </project>
