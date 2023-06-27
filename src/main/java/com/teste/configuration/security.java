@@ -30,7 +30,6 @@ public class security {
     } 
     public Userdto login(String login[],Userdto userdto){
         if (loginVerify(login)) {
-            
             //userdto.setId(usermodel.getId_username().intValue());
             userdto.setUsername(usermodel.getUsername());
             userdto.setStatus(usermodel.getStatus());
