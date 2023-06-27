@@ -30,7 +30,7 @@ public class Usermodel  {
     private Long id_username;
     @Column(name = "nome",unique = true,nullable = false)
     private String username;
-    @Column(name = "hostname",unique = true,nullable = false)
+    @Column(name = "hostname",nullable = false)
     private String host;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
