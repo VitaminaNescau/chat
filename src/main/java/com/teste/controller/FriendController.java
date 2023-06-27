@@ -2,8 +2,8 @@ package com.teste.controller;
 
 import java.util.List;
 
+import com.teste.dao.User_dao;
 import com.teste.dto.FriendDTO;
-import com.teste.dto.MessagerDTO;
 import com.teste.service.FriendsAndGroups;
 
 import jakarta.ws.rs.GET;
@@ -20,9 +20,9 @@ import jakarta.ws.rs.core.Response.Status;
 
 @Path("friend")
 @Produces(MediaType.APPLICATION_JSON)
-public class FriendController extends Application {
+public class FriendController extends Application{
 
-  @GET
+    @GET
     @Path("/list/{id}")
     public Response findFriends(@PathParam ("id") int id){
         List<FriendDTO> friends =  new FriendsAndGroups().allFriends(id);
@@ -31,19 +31,16 @@ public class FriendController extends Application {
         }
             return Response.status(Status.NO_CONTENT).entity(friends).build();
     }
-
     @GET
-    @Path("messager/{id}/{name}")
-    public Response findMessager(@PathParam("id") int id,@PathParam("name") String name){
-        List<MessagerDTO> messager = new FriendsAndGroups().MessagerHistory(id,name);
-        if (!messager.isEmpty()) {
-            return Response.status(Status.ACCEPTED).entity(messager).build();
+    @Path("list/new/{user_name}/{name}")
+    public Response findNewFriend(@PathParam ("name") String name,@PathParam ("user_name") String user_name){
+       FriendDTO friend = User_dao.getInstance().findUser(name,true);
+        if (friend != null) {
+             User_dao.getInstance().AddFriend(name,user_name);
+            return Response.status(Status.ACCEPTED).entity(friend).build();
         }
-            return Response.status(Status.NO_CONTENT).entity(messager).build();
-        
+        return Response.status(Status.NO_CONTENT).entity(false).build();
     }
-    
-    
 }
 
  
