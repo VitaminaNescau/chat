@@ -3,6 +3,7 @@ package com.teste.service;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 import com.teste.dao.User_dao;
 import com.teste.dto.FriendDTO;
@@ -59,11 +60,17 @@ public class SendMessage {
     }
     /*metodo para as mensagens privadas*/
     public void sendFor(ConcurrentHashMap<String, FriendDTO> users,Userdto user,String msg[]) throws IOException, NullPointerException{
+            
             MessagerModel savemessager = new MessagerModel(msg[1],user,users.get(msg[0]));
             User_dao.getInstance().saveMessager(savemessager);
-            output = new PrintWriter(users.get(msg[0]).getSocket().getOutputStream(), true);
-            output.println(user.getUsername()+";"+msg[1]);
+           try {
+                output = new PrintWriter(users.get(msg[0]).getSocket().getOutputStream(), true);
+                output.println(user.getUsername()+";"+msg[1]);
           
+           } catch (NullPointerException e) {
+                Logger.getLogger("ERRO").info("Usuario OFF");
+           }
+           
        
     }
 
