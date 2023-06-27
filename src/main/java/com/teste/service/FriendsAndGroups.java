@@ -64,12 +64,9 @@ public class FriendsAndGroups extends Thread{
                 dto.setSend(messager.getSend_id().getUsername());
                 dto.setReceive(messager.getReceiver_id().getUsername());
                 messagerDTOs.add(dto); 
-            }  
-           
+            }   
         }
-        
         return  messagerDTOs;
-        
     }
  
 }
