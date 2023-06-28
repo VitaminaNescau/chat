@@ -41,7 +41,7 @@ public class SendMessage {
         } catch(NullPointerException e){
             e.printStackTrace();
         } catch(ArrayIndexOutOfBoundsException e){
-            e.printStackTrace();
+           Logger.getGlobal().info("Erro no formato da mensagem");
         }
            
        
@@ -61,15 +61,15 @@ public class SendMessage {
     /*metodo para as mensagens privadas*/
     public void sendFor(ConcurrentHashMap<String, FriendDTO> users,Userdto user,String msg[]) throws IOException, NullPointerException{
             
-            MessagerModel savemessager = new MessagerModel(msg[1],user,users.get(msg[0]));
-            User_dao.getInstance().saveMessager(savemessager);
-           try {
+        MessagerModel savemessager = new MessagerModel(msg[1],user,users.get(msg[0]));
+        User_dao.getInstance().saveMessager(savemessager);
+            try {
                 output = new PrintWriter(users.get(msg[0]).getSocket().getOutputStream(), true);
                 output.println(user.getUsername()+";"+msg[1]);
           
-           } catch (NullPointerException e) {
+            }catch (NullPointerException e) {
                 Logger.getLogger("ERRO").info("Usuario OFF");
-           }
+            }
            
        
     }
