@@ -33,36 +33,18 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-c3p0</artifactId>
       <version>6.2.4.Final</version>
-    </dependency>
-        <!-- <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-http</artifactId>
-            <version>3.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
-            <version>3.1.2</version>
-        </dependency>
-             <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-binding</artifactId>
-            <version>3.1.2</version>
-        </dependency> -->
-    
-  <dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-reactor-netty</artifactId>
-    <version>6.2.4.Final</version>
-  </dependency>
-  <dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-jackson2-provider</artifactId>
-    <version>6.2.4.Final</version>
-  </dependency>
-
-
-  </dependencies>
+    </dependency> 
+      <dependency>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-reactor-netty</artifactId>
+        <version>6.2.4.Final</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-jackson2-provider</artifactId>
+        <version>6.2.4.Final</version>
+      </dependency>
+    </dependencies>
 
   <build>
       <resources>
@@ -96,7 +78,7 @@
               <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>ServerDK</mainClass>
+                        <mainClass>com.teste.ServerDK</mainClass>
                     </manifest>
                 </archive>
             </configuration>
@@ -123,7 +105,7 @@
             <configuration>
               <archive>
                 <manifest>
-                  <mainClass>ServerDK</mainClass>
+                  <mainClass>com.teste.ServerDK</mainClass>
                 </manifest>
               </archive>
               <descriptorRefs>
@@ -145,10 +127,11 @@
             <artifactId>exec-maven-plugin</artifactId>
             <version>3.1.0</version>
             <configuration>
-                <mainClass>ServerDK</mainClass>
-              
+                <mainClass>com.teste.ServerDK</mainClass>
+      
             </configuration>
         </plugin>
+   
       </plugins>
     </pluginManagement>
   </build>
