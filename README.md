@@ -14,7 +14,7 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 
 1. Clone este repositório para o seu ambiente local:
   
-  git clone https://github.com/seu-usuario/chat-server.git
+  git clone https://github.com/vitaminanescau/chat_back-end.git
 
 2. Acesse o diretório do projeto:
 
