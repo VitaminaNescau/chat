@@ -26,13 +26,18 @@
     <dependency>
       <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>6.2.0.Final</version>
+      <version>6.2.6.Final</version>  
     </dependency> 
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-c3p0</artifactId>
       <version>6.2.4.Final</version>
     </dependency> 
+    <dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-core</artifactId>
+    <version>6.2.4.Final</version>
+    </dependency>
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-reactor-netty</artifactId>
@@ -43,6 +48,7 @@
         <artifactId>resteasy-jackson2-provider</artifactId>
         <version>6.2.4.Final</version>
       </dependency>
+
     </dependencies>
 
   <build>
@@ -124,15 +130,42 @@
           </configuration>
           <executions>
             <execution>
-              <id>create-executable-jar</id>
-              <phase>package</phase>
-              <goals>
-                <goal>single</goal>
-              </goals>
+              <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                    <goal>single</goal>
+                </goals>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.teste.ServerDK</mainClass> <!-- Especifique a classe principal do seu aplicativo -->
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <unpack>true</unpack> <!-- Opção para descompactar as dependências -->
+                </configuration>
             </execution>
           </executions>
         </plugin>
- 
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.5.0</version> <!-- Versão atualizada do Maven Shade Plugin -->
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <!-- Configuração adicional, se necessário -->
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -141,6 +174,55 @@
   
 
     <dependencies>
+
+      <dependency>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>6.2.4.Final</version>
+      </dependency>
+
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>2.15.2</version>
+      </dependency>
+
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>2.15.2</version>
+      </dependency>
+
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.15.2</version>
+      </dependency>
+
+
+      <dependency>
+        <groupId>org.reactivestreams</groupId>
+        <artifactId>reactive-streams</artifactId>
+        <version>1.0.3</version>
+      </dependency>
+
+
+      <dependency>
+        <groupId>jakarta.xml.bind</groupId>
+        <artifactId>jakarta.xml.bind-api</artifactId>
+        <version>3.0.1</version>
+      </dependency>
+
+
+      <dependency>
+        <groupId>org.eclipse.angus</groupId>
+        <artifactId>angus-activation</artifactId>
+        <version>2.0.0</version>
+      </dependency>
+
     
 
       <dependency>
