@@ -1,5 +1,6 @@
 package com.teste.dto;
 
+
 public class MessagerDTO {
     
     private String messager;

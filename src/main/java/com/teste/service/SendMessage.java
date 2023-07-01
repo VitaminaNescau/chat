@@ -6,8 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import com.teste.dao.User_dao;
-import com.teste.dto.FriendDTO;
-import com.teste.dto.Userdto;
+import com.teste.dto.UserDTO;
 import com.teste.model.MessagerModel;
 
 /**
@@ -28,7 +27,7 @@ public class SendMessage {
         }
         return instance;
     }
-    public void forwardMessage(ConcurrentHashMap<String, FriendDTO> users,Userdto user,String msg){
+    public void forwardMessage(ConcurrentHashMap<String, UserDTO> users,UserDTO user,String msg){
         String MSG[]  = verifySend(msg);
          try {
             if (MSG[0].equals(group)) {
@@ -47,7 +46,7 @@ public class SendMessage {
        
     }
     /*metodo para as mensagens em grupo*/
-    public void sendAll(ConcurrentHashMap<String, FriendDTO> users,Userdto userdto,String msg[]) {
+    public void sendAll(ConcurrentHashMap<String, UserDTO> users,UserDTO userdto,String msg[]) {
         users.forEach((c,v)->{
                 try {
                 output = new PrintWriter(v.getSocket().getOutputStream(), true);
@@ -59,7 +58,7 @@ public class SendMessage {
         });
     }
     /*metodo para as mensagens privadas*/
-    public void sendFor(ConcurrentHashMap<String, FriendDTO> users,Userdto user,String msg[]) throws IOException, NullPointerException{
+    public void sendFor(ConcurrentHashMap<String, UserDTO> users,UserDTO user,String msg[]) throws IOException, NullPointerException{
             
         MessagerModel savemessager = new MessagerModel(msg[1],user,users.get(msg[0]));
         User_dao.getInstance().saveMessager(savemessager);

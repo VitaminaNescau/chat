@@ -14,31 +14,28 @@ import com.teste.configuration.ManagerUser;
 import com.teste.configuration.ServerNetty;
 import com.teste.configuration.security;
 import com.teste.dao.User_dao;
-import com.teste.dto.Userdto;
+import com.teste.dto.UserDTO;
 import com.teste.model.Usermodel.Status;
 import com.teste.service.FriendsAndGroups;
 import com.teste.service.SendMessage;
 public class ServerDK implements Runnable  {
     private BufferedReader input;
     private PrintStream output;
-    //private  HashMap<String,FriendDTO> user = new HashMap<>();
-    // private static ConcurrentHashMap<String,Userdto> accounts = new ConcurrentHashMap<>();
     private static ManagerUser accounts = new ManagerUser();
     private  ServerSocket server;
     private FriendsAndGroups friend;
     Logger log;
-    private  Userdto userdto;
-    // private  Usermodel  usermodel;
-    // private  User_dao userDao;
-    
-    public ServerDK(Userdto user){
+    private  UserDTO userdto;
+
+    public ServerDK(UserDTO user){
         this.userdto = user; 
     }
     ServerDK(){
         try { 
+            
             server = new ServerSocket();
            //server.setPerformancePreferences(1, 0, 0);
-            server.bind(new InetSocketAddress("localhost", 3030));  
+            server.bind(new InetSocketAddress("localhost",3030), 3030);  
             new ServerNetty().start();
             User_dao.getInstance();
         } catch (IOException e) {
@@ -54,7 +51,7 @@ public class ServerDK implements Runnable  {
         //ExecutorService pool = Executors.newFixedThreadPool(50);
         
         while (true) {
-            userdto = new Userdto();
+            userdto = new UserDTO();
         try {
             userdto.setSocket(server.accept());
             
@@ -72,65 +69,52 @@ public class ServerDK implements Runnable  {
         try {
             security sc = new security();
             input = new BufferedReader(new InputStreamReader(userdto.getSocket().getInputStream()));
-            
             String info[] = sc.verifyString(input.readLine());
-       
             userdto = sc.login(info,userdto);
             output = new PrintStream(userdto.getSocket().getOutputStream(), true);
-            /*Sessão do usuario 100% iniciada */
             if (userdto.getStatus() == Status.ON) {
                 output.println("OK");
                 output.println(userdto.getId());
                 output.println(userdto.getUsername());
                 accounts.addUser(userdto);
-                
                 friend = new FriendsAndGroups(userdto,accounts);
-               
                 Thread messager = new Thread(()->{
                 Thread.currentThread().setName("MESSAGER");
                     while (true) {
                         try {
                             SendMessage.getInstance().forwardMessage(friend.users,userdto,input.readLine());
-                        
                         } catch (SocketException e) {
                             try {
                                 userdto.getSocket().close();
                                 System.out.println("desconectado");
                                 break;
-                                
                             } catch (IOException e1) {
-                                e1.printStackTrace();
+                                log.info(e1.getMessage());
                             }
-                            e.printStackTrace();
+                            log.info(e.getMessage());
                         } catch (NullPointerException | IOException e) {
-                          
-                            e.printStackTrace();
+                          log.info(e.getMessage());
                         }
-
                     }
                 });
-                messager.start();
-                         
+                messager.start();        
            }else{
             output.println("ERRO");
            }
            while (true) {
             if (userdto == null || userdto.getSocket().isClosed() ) {
-                        sc.removeUser(userdto);
-                        accounts.removerUSer(userdto);
-                        System.out.println("Usuario desconectado ");
-                        break;
+                sc.removeUser(userdto);
+                accounts.removerUSer(userdto);
+                System.out.println("Usuario desconectado ");
+                break;
            }
            try {
             friend.updateListFriend();
             Thread.sleep(10000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+               log.info(e.getMessage());
             }
-            
            }
-           
-         
         } catch (SocketException  e) {
             log.info(e.getMessage());
         } catch(IOException  e){

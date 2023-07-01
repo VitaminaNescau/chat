@@ -9,13 +9,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import com.teste.dto.FriendDTO;
+import com.teste.dto.UserDTO;
 import com.teste.model.Friendmodel;
 import com.teste.model.MessagerModel;
 import com.teste.model.Usermodel;
 import com.teste.model.Usermodel.Status;
 
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.FlushModeType;
@@ -25,11 +24,11 @@ import jakarta.persistence.Query;
 public class User_dao {
     private EntityManagerFactory factory;
     private EntityManager manager;
-    private Usermodel user;
     private static volatile User_dao instance;
-    //private ExecutorService poll =  Executors.newCachedThreadPool();
     private ThreadPoolExecutor poll = new ThreadPoolExecutor(0,
     Integer.MAX_VALUE,10,TimeUnit.SECONDS,new SynchronousQueue<>());
+
+    
     public User_dao(){
         manager = conectionDB();   
     }
@@ -51,69 +50,53 @@ public class User_dao {
         return manager;
     }
     public boolean createUser(Usermodel user){
-          
-            manager.getTransaction().begin();
-            Query query = manager.createNativeQuery("select nome,hostname from usuario where nome = :username")
-                .setParameter("username", user.getUsername());
+        manager.getTransaction().begin();
+        Query query = manager.createNativeQuery("select nome,hostname from usuario where nome = :username")
+            .setParameter("username", user.getUsername());
                 if (query.getResultList().isEmpty()) {
-                    try {
-                         manager.persist(user);
-                    } catch (EntityExistsException e) {
-                        
-                    }
-                   
-                    Logger.getLogger("CREATE").info("USUARIO REGISTRADO");
-                     manager.getTransaction().commit();
-                     
+                    manager.persist(user);
+                    manager.getTransaction().commit();
+                    Logger.getLogger("CREATE").info("NOVO USUARIO REGISTRADO:"+user.getUsername());
                     return true;
                 }else{
-                    Logger.getLogger("CREATE").info("USUARIO JA EXISTE NO BANCO");
                     manager.getTransaction().commit();
-                    
+                    Logger.getLogger("CREATE").info("USUARIO JA EXISTE NO BANCO");
                     return false;
                 }
-        
     }
-    public void deleteUser(){
-       
+    public void deleteUser(Usermodel user){
         manager.getTransaction().begin();
         manager.remove(user);
         manager.getTransaction().commit();
-        manager.close();
     }
     public Usermodel findUser(String name){
-        
         Query query = manager
         .createNativeQuery("Select * from usuario where nome = :username",Usermodel.class)
         .setParameter("username",name);
         manager.getTransaction().begin();
-    
         if (!query.getResultList().isEmpty()) {
             Usermodel resultModel =  (Usermodel)query.getResultList().iterator().next();
             manager.getTransaction().commit();
-        // FriendDTO result = new FriendDTO();
-           
             return resultModel;
         }
         manager.getTransaction().commit();
         return null;
     }
-        public FriendDTO findUser(String name,boolean verify){
+    public UserDTO findUser(String name,boolean verify){
         if (verify) {
-              Query query = manager
-        .createNativeQuery("Select * from usuario where nome = :username",Usermodel.class)
-        .setParameter("username",name);
-        manager.getTransaction().begin();
-    
-        if (!query.getResultList().isEmpty()) {
-            Usermodel resultModel =  (Usermodel)query.getResultList().iterator().next();
-            manager.getTransaction().commit();
-            FriendDTO result = new FriendDTO();
-           result.setUsername(resultModel.getUsername());
-           result.setStatus(resultModel.getStatus());
-           result.setId(resultModel.getId_username().intValue());
-            return result;
-        }
+            Query query = manager
+            .createNativeQuery("Select * from usuario where nome = :username",Usermodel.class)
+            .setParameter("username",name);
+            manager.getTransaction().begin();
+            if (!query.getResultList().isEmpty()) {
+                Usermodel resultModel =  (Usermodel)query.getResultList().iterator().next();
+                manager.getTransaction().commit();
+                UserDTO result = new UserDTO();
+                result.setUsername(resultModel.getUsername());
+                result.setStatus(resultModel.getStatus());
+                result.setId(resultModel.getId_username().intValue());
+                return result;
+            }
         manager.getTransaction().commit();
         }
         return null;
@@ -126,7 +109,6 @@ public class User_dao {
             manager.getTransaction().begin();
             result = query.getResultList();
             manager.getTransaction().commit();
-            
             return result;
             }).get();
         } catch (InterruptedException | ExecutionException e) {

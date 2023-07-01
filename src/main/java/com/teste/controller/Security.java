@@ -7,15 +7,17 @@ import com.teste.model.Usermodel;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 @Path("/security")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class Security {
     
     @POST
     @Path("singup")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response singUp(Usermodel user){
         if (user == null) {
             return Response.status(Status.BAD_REQUEST).build();

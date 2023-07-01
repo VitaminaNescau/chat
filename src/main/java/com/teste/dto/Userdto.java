@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.net.Socket;
 import com.teste.model.Usermodel.Status;
 
-public class Userdto implements Serializable{
+public class UserDTO implements Serializable{
     private int id;
     private String username;
     private String host;

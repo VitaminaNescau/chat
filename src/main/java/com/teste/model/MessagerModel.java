@@ -1,7 +1,7 @@
 package com.teste.model;
 
-import com.teste.dto.FriendDTO;
-import com.teste.dto.Userdto;
+
+import com.teste.dto.UserDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 @Table(name = "mensagem")
 public class MessagerModel  {
     
-    public MessagerModel(String msg, Userdto user, FriendDTO friend){ 
+    public MessagerModel(String msg, UserDTO user, UserDTO friend){ 
         Usermodel usermodel = new Usermodel() ; 
         new String();
         usermodel.setId_username(Long.parseLong(String.valueOf(user.getId())));

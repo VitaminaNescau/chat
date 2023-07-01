@@ -3,13 +3,13 @@ package com.teste.configuration;
 import java.util.ArrayList;
 
 import com.teste.dao.User_dao;
-import com.teste.dto.Userdto;
+import com.teste.dto.UserDTO;
 import com.teste.model.Usermodel;
 
 public class security {
     
     private Usermodel usermodel;
-    public ArrayList<Userdto> user = new ArrayList<>();
+    public ArrayList<UserDTO> user = new ArrayList<>();
     
     public String[] verifyString(String msg){
         return msg.split(";");
@@ -28,7 +28,7 @@ public class security {
             }
             return false;
     } 
-    public Userdto login(String login[],Userdto userdto){
+    public UserDTO login(String login[],UserDTO userdto){
         if (loginVerify(login)) {
             //userdto.setId(usermodel.getId_username().intValue());
             userdto.setUsername(usermodel.getUsername());
@@ -40,7 +40,7 @@ public class security {
         }
         return userdto;
     }
-    public void removeUser(Userdto user){
+    public void removeUser(UserDTO user){
         this.user.remove(user);
     }
 }
