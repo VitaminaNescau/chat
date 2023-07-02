@@ -1,10 +1,10 @@
-package com.teste.configuration;
+package com.chat.configuration;
 
 import java.util.ArrayList;
 
-import com.teste.dao.User_dao;
-import com.teste.dto.UserDTO;
-import com.teste.model.Usermodel;
+import com.chat.dao.User_dao;
+import com.chat.dto.UserDTO;
+import com.chat.model.Usermodel;
 
 public class security {
     

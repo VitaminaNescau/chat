@@ -1,4 +1,4 @@
-package com.teste.configuration;
+package com.chat.configuration;
 
 import org.jboss.resteasy.core.ResteasyDeploymentImpl;
 import org.jboss.resteasy.plugins.server.reactor.netty.ReactorNettyJaxrsServer;
@@ -15,6 +15,7 @@ public class ServerNetty {
         server.setDeployment(dp);
         server.setHostname("localhost");
         server.setPort(8080);
+        server.deploy();
         server.start();
      
        

@@ -1,10 +1,10 @@
-package com.teste.controller;
+package com.chat.controller;
 
 import java.util.List;
 
-import com.teste.dao.User_dao;
-import com.teste.dto.UserDTO;
-import com.teste.service.FriendsAndGroups;
+import com.chat.dao.User_dao;
+import com.chat.dto.UserDTO;
+import com.chat.service.FriendsAndGroups;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;

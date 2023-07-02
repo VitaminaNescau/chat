@@ -1,4 +1,4 @@
-package com.teste.dao;
+package com.chat.dao;
 
 
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import com.teste.dto.UserDTO;
-import com.teste.model.Friendmodel;
-import com.teste.model.MessagerModel;
-import com.teste.model.Usermodel;
-import com.teste.model.Usermodel.Status;
+import com.chat.dto.UserDTO;
+import com.chat.model.Friendmodel;
+import com.chat.model.MessagerModel;
+import com.chat.model.Usermodel;
+import com.chat.model.Usermodel.Status;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -64,10 +64,16 @@ public class User_dao {
                     return false;
                 }
     }
-    public void deleteUser(Usermodel user){
-        manager.getTransaction().begin();
-        manager.remove(user);
+    public boolean deleteUser(Usermodel user){
+     manager.getTransaction().begin();
+     Usermodel usermodel = manager.find(Usermodel.class,user.getId_username());
+        if (usermodel == null) {
+            manager.getTransaction().commit();
+            return false;
+        }
+        manager.remove(usermodel);
         manager.getTransaction().commit();
+        return true;
     }
     public Usermodel findUser(String name){
         Query query = manager

@@ -1,4 +1,4 @@
-package com.teste.model;
+package com.chat.model;
 
 
 

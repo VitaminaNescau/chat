@@ -1,8 +1,9 @@
-package com.teste.dto;
+package com.chat.dto;
 
 import java.io.Serializable;
 import java.net.Socket;
-import com.teste.model.Usermodel.Status;
+
+import com.chat.model.Usermodel.Status;
 
 public class UserDTO implements Serializable{
     private int id;

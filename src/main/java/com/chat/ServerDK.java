@@ -1,4 +1,4 @@
-package com.teste;
+package com.chat;
 
 
 import java.io.BufferedReader;
@@ -10,14 +10,14 @@ import java.net.ServerSocket;
 import java.net.SocketException;
 import java.util.logging.Logger;
 
-import com.teste.configuration.ManagerUser;
-import com.teste.configuration.ServerNetty;
-import com.teste.configuration.security;
-import com.teste.dao.User_dao;
-import com.teste.dto.UserDTO;
-import com.teste.model.Usermodel.Status;
-import com.teste.service.FriendsAndGroups;
-import com.teste.service.SendMessage;
+import com.chat.configuration.ManagerUser;
+import com.chat.configuration.ServerNetty;
+import com.chat.configuration.security;
+import com.chat.dao.User_dao;
+import com.chat.dto.UserDTO;
+import com.chat.model.Usermodel.Status;
+import com.chat.service.FriendsAndGroups;
+import com.chat.service.SendMessage;
 public class ServerDK implements Runnable  {
     private BufferedReader input;
     private PrintStream output;
@@ -48,16 +48,11 @@ public class ServerDK implements Runnable  {
         
     }
     public void conectionServe(){
-        //ExecutorService pool = Executors.newFixedThreadPool(50);
-        
         while (true) {
             userdto = new UserDTO();
         try {
             userdto.setSocket(server.accept());
-            
-            //accounts.add(userdto);
             new Thread(new ServerDK(userdto)).start();
-            //pool.submit(new ServerDK(userdto));
         } catch (IOException e) {
             log.info(e.getMessage());
         }

@@ -1,11 +1,11 @@
-package com.teste.controller;
+package com.chat.controller;
 
-import com.teste.dao.User_dao;
-import com.teste.model.Usermodel;
-
+import com.chat.dao.User_dao;
+import com.chat.model.Usermodel;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -33,5 +33,13 @@ public class Security {
         
         
     }
-
+    @PUT
+    @Path("delete")
+    public Response DeleteAccount(Usermodel user){
+        if (user == null) {
+            return Response.status(Status.NOT_ACCEPTABLE).entity("Conta não encontrada").build();
+        }else{
+            return Response.status(Status.ACCEPTED).entity(User_dao.getInstance().deleteUser(user)).build();
+    }
+    }
 }

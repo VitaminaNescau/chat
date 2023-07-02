@@ -1,13 +1,13 @@
-package com.teste.service;
+package com.chat.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import com.teste.dao.User_dao;
-import com.teste.dto.UserDTO;
-import com.teste.model.MessagerModel;
+import com.chat.dao.User_dao;
+import com.chat.dto.UserDTO;
+import com.chat.model.MessagerModel;
 
 /**
  * SendMessage

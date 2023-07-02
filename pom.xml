@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.teste</groupId>
+  <groupId>com.chat</groupId>
   <artifactId>chat</artifactId>
   <version>0.0</version>
   <name>chat</name>
@@ -83,7 +83,7 @@
               <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>com.teste.ServerDK</mainClass>
+                        <mainClass>com.chat.ServerDK</mainClass>
                     </manifest>
                 </archive>
             </configuration>
@@ -110,7 +110,7 @@
             <artifactId>exec-maven-plugin</artifactId>
             <version>3.1.0</version>
             <configuration>
-                <mainClass>com.teste.ServerDK</mainClass>
+                <mainClass>com.chat.ServerDK</mainClass>
             </configuration>
         </plugin>
         
@@ -124,7 +124,7 @@
             </descriptorRefs>
             <archive>
               <manifest>
-                <mainClass>com.teste.ServerDK</mainClass>
+                <mainClass>com.chat.ServerDK</mainClass>
               </manifest>
             </archive>
           </configuration>
@@ -139,7 +139,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.teste.ServerDK</mainClass> <!-- Especifique a classe principal do seu aplicativo -->
+                            <mainClass>com.chat.ServerDK</mainClass> <!-- Especifique a classe principal do seu aplicativo -->
                         </manifest>
                     </archive>
                     <descriptorRefs>

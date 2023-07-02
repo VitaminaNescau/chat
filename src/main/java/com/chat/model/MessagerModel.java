@@ -1,7 +1,7 @@
-package com.teste.model;
+package com.chat.model;
 
 
-import com.teste.dto.UserDTO;
+import com.chat.dto.UserDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

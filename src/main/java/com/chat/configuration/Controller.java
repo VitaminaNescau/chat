@@ -1,13 +1,12 @@
-package com.teste.configuration;
+package com.chat.configuration;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import com.chat.controller.FriendController;
+import com.chat.controller.MessagerController;
+import com.chat.controller.Security;
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
-import com.teste.controller.FriendController;
-import com.teste.controller.MessagerController;
-import com.teste.controller.Security;
-
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Application;

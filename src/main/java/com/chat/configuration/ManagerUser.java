@@ -1,8 +1,8 @@
-package com.teste.configuration;
+package com.chat.configuration;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.teste.dto.UserDTO;
+import com.chat.dto.UserDTO;
 
 public class ManagerUser {
    

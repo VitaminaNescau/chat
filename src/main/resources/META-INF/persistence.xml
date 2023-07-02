@@ -8,9 +8,9 @@
           <!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/chat"/>
-            <property name="jakarta.persistence.jdbc.user" value="{USERNAME}"/>
-            <property name="jakarta.persistence.jdbc.password" value="{PASSWORD}"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://10.147.17.98:3306/chat"/>
+            <property name="jakarta.persistence.jdbc.user" value="vscode"/>
+            <property name="jakarta.persistence.jdbc.password" value="vscode123"/>
             <property name="hibernate.c3p0.maxIdleTime" value="5"/>
             <property name="hibernate.c3p0.max_size" value="15" />
             <property name="hibernate.c3p0.acquire_increment" value="1" />

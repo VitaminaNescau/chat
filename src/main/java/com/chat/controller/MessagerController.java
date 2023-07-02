@@ -1,9 +1,9 @@
-package com.teste.controller;
+package com.chat.controller;
 
 import java.util.List;
 
-import com.teste.dto.MessagerDTO;
-import com.teste.service.FriendsAndGroups;
+import com.chat.dto.MessagerDTO;
+import com.chat.service.FriendsAndGroups;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;

@@ -1,4 +1,4 @@
-package com.teste.service;
+package com.chat.service;
 
 
 
@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.teste.configuration.ManagerUser;
-import com.teste.dao.User_dao;
-import com.teste.dto.MessagerDTO;
-import com.teste.dto.UserDTO;
-import com.teste.model.MessagerModel;
+import com.chat.configuration.ManagerUser;
+import com.chat.dao.User_dao;
+import com.chat.dto.MessagerDTO;
+import com.chat.dto.UserDTO;
+import com.chat.model.MessagerModel;
 
 public class FriendsAndGroups extends Thread{
     private  UserDTO user;

@@ -1,4 +1,4 @@
-package com.teste.dto;
+package com.chat.dto;
 
 
 public class MessagerDTO {
