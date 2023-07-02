@@ -105,7 +105,7 @@ public class ServerDK implements Runnable  {
            }
            try {
             friend.updateListFriend();
-            Thread.sleep(10000);
+            Thread.sleep(1000);
             } catch (InterruptedException e) {
                log.info(e.getMessage());
             }
