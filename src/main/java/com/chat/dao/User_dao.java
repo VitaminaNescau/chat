@@ -64,17 +64,17 @@ public class User_dao {
                     return false;
                 }
     }
-    public boolean deleteUser(Usermodel user){
-     manager.getTransaction().begin();
-     Usermodel usermodel = manager.find(Usermodel.class,user.getId_username());
-        if (usermodel == null) {
-            manager.getTransaction().commit();
-            return false;
-        }
-        manager.remove(usermodel);
-        manager.getTransaction().commit();
-        return true;
-    }
+    // public boolean deleteUser(Usermodel user){
+    //     manager.getTransaction().begin();
+    //     Usermodel usermodel = manager.find(Usermodel.class,user.getId_username());
+    //         if (usermodel == null) {
+    //             manager.getTransaction().commit();
+    //             return false;
+    //         }
+    //         manager.remove(usermodel);
+    //         manager.getTransaction().commit();
+    //         return true;
+    // }
     public Usermodel findUser(String name){
         Query query = manager
         .createNativeQuery("Select * from usuario where nome = :username",Usermodel.class)
