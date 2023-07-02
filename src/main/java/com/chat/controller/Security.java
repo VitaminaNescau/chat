@@ -33,13 +33,13 @@ public class Security {
         
         
     }
-    @PUT
-    @Path("delete")
-    public Response DeleteAccount(Usermodel user){
-        if (user == null) {
-            return Response.status(Status.NOT_ACCEPTABLE).entity("Conta não encontrada").build();
-        }else{
-            return Response.status(Status.ACCEPTED).entity(User_dao.getInstance().deleteUser(user)).build();
-    }
-    }
+    // @PUT
+    // @Path("delete")
+    // public Response DeleteAccount(Usermodel user){
+    //     if (user == null) {
+    //         return Response.status(Status.NOT_ACCEPTABLE).entity("Conta não encontrada").build();
+    //     }else{
+    //         return Response.status(Status.ACCEPTED).entity(User_dao.getInstance().deleteUser(user)).build();
+    // }
+    // }
 }
