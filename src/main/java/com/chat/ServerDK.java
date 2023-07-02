@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.SocketException;
@@ -32,10 +33,10 @@ public class ServerDK implements Runnable  {
     }
     ServerDK(){
         try { 
-            
+            System.out.println(InetAddress.getLocalHost().getHostAddress());
             server = new ServerSocket();
            //server.setPerformancePreferences(1, 0, 0);
-            server.bind(new InetSocketAddress("localhost",3030), 3030);  
+            server.bind(new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(),3030), 3030);  
             new ServerNetty().start();
             User_dao.getInstance();
         } catch (IOException e) {
