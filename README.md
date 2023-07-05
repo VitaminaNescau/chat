@@ -20,7 +20,7 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 
 3. Configure o resource para seu banco de dados, vá ao persistence'src/main/resources/META-INF/persistence.xml' e altere os dados. Crie um banco chamado chat no seu sql preferido, por padrão é utilizado o mySQL caso use outro substitua no persistence.xml.
 
-4. É utilizado o ip padrão da maquina, caso queira alterar vá em 'src/main/java/com/chat/configuration/ServerNetty.java' e `src/main/java/com/chat/ServerDK.java`
+4. É utilizado o ip padrão da maquina, caso queira alterar vá em `src/main/java/com/chat/configuration/ServerNetty.java` e `src/main/java/com/chat/ServerDK.java`
 
 5. Compile o projeto usando o Maven:
 
