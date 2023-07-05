@@ -14,20 +14,23 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 
 1. Clone este repositório para o seu ambiente local:
   
-  git clone https://github.com/vitaminanescau/chat_back-end.git
+  'git clone https://github.com/vitaminanescau/chat_back-end.git'
 
-2. Acesse o diretório do projeto:
+2. Acesse o diretório do projeto.
 
+3. Configure o resource para seu banco de dados, vá ao persistence'src/main/resources/META-INF/persistence.xml' e altere os dados. Crie um banco chamado chat no seu sql preferido, por padrão é utilizado o mySQL caso use outro substitua no persistence.xml.
 
-3. Compile o projeto usando o Maven:
+4. É utilizado o ip padrão da maquina, caso queira alterar vá em 'src/main/java/com/chat/configuration/ServerNetty.java' e 'src/main/java/com/chat/ServerDK.java'
 
-  mvn clean package
+5. Compile o projeto usando o Maven:
+
+  'mvn clean package shade:shade'
 
 # Executando o servidor
 
 Após a configuração, você pode iniciar o servidor executando o seguinte comando:
 
-java -jar Servidor.jar
+'java -jar ./target/chat-0.0.jar'
 
 O servidor estará em execução e pronto para receber conexões de clientes para o chat na porta 3030 da rede local.
 

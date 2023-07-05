@@ -135,13 +135,13 @@ public class User_dao {
             user = (Usermodel) query.getResultList().iterator().next();
             user.setStatus(Status.ON);
             manager.merge(user);
-           // manager.refresh(user);
+           manager.getTransaction().commit();
           
         }else{
             manager.getTransaction().commit();
             return null;
         }
-        manager.getTransaction().commit();
+       
         return user;
     }  
     public void saveMessager(MessagerModel messager){

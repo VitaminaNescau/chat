@@ -6,7 +6,6 @@ import com.chat.dao.User_dao;
 import com.chat.dto.UserDTO;
 import com.chat.service.FriendsAndGroups;
 
-import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -21,7 +20,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 @Path("friend")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class FriendController extends Application{
 ;
     @GET

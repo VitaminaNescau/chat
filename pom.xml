@@ -138,7 +138,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
+                 
                             <mainClass>com.chat.ServerDK</mainClass> <!-- Especifique a classe principal do seu aplicativo -->
                         </manifest>
                     </archive>

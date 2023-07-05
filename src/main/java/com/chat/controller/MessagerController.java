@@ -5,7 +5,6 @@ import java.util.List;
 import com.chat.dto.MessagerDTO;
 import com.chat.service.FriendsAndGroups;
 
-import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -16,7 +15,6 @@ import jakarta.ws.rs.core.Response.Status;
 
 @Path("messager")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class MessagerController {
     @GET
     @Path("/{id}/{name}")

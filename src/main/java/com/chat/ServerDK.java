@@ -35,7 +35,7 @@ public class ServerDK implements Runnable  {
         try { 
             System.out.println(InetAddress.getLocalHost().getHostAddress());
             server = new ServerSocket();
-           //server.setPerformancePreferences(1, 0, 0);
+            server.setPerformancePreferences(1, 0, 0);
             server.bind(new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(),3030), 3030);  
             new ServerNetty().start();
             User_dao.getInstance();
@@ -85,11 +85,24 @@ public class ServerDK implements Runnable  {
                                 System.out.println("desconectado");
                                 break;
                             } catch (IOException e1) {
+                                try {
+                                    userdto.getSocket().close();
+                                } catch (IOException e2) {
+                                    // TODO Auto-generated catch block
+                                    e2.printStackTrace();
+                                }
                                 log.info(e1.getMessage());
                             }
                             log.info(e.getMessage());
                         } catch (NullPointerException | IOException e) {
+                            try {
+                                userdto.getSocket().close();
+                            } catch (IOException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
                           log.info(e.getMessage());
+                          break;
                         }
                     }
                 });
@@ -98,6 +111,7 @@ public class ServerDK implements Runnable  {
             output.println("ERRO");
            }
            while (true) {
+         
             if (userdto == null || userdto.getSocket().isClosed() ) {
                 sc.removeUser(userdto);
                 accounts.removerUSer(userdto);
